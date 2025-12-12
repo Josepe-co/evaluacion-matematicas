@@ -49,6 +49,8 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+
+
 function activateTestMode() {
     if (document.getElementById('menu-screen').classList.contains('active')) {
         // Si está en el menú, ir directo al juego
@@ -138,7 +140,11 @@ function renderTopicsGrid() {
             </div>
         `;
         
-        card.onclick = () => startTopic(index);
+        // Asignar evento click
+        card.addEventListener('click', function() {
+            startTopic(index);
+        });
+        
         grid.appendChild(card);
     });
 }
