@@ -12,14 +12,14 @@ let gameState = {
     topics: ['logica', 'operaciones', 'porcentaje', 'proporcion', 'jerarquia', 'aplicacion']
 };
 
-// Configuración de Firebase (deberás completar con tus credenciales)
+// Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID"
+    apiKey: "AIzaSyAn-m0H5vPKr4hnuoQZG_yhzs_R3If4MC",
+    authDomain: "evaluacion-matematicas-49d6f.firebaseapp.com",
+    projectId: "evaluacion-matematicas-49d6f",
+    storageBucket: "evaluacion-matematicas-49d6f.firebasestorage.app",
+    messagingSenderId: "466583967870",
+    appId: "1:466583967870:web:39548230Df2be1c394e02f"
 };
 
 // Inicializar Firebase
