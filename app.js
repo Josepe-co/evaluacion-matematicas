@@ -167,7 +167,21 @@ function startTopic(topicIndex) {
 }
 
 function backToTopicsMenu() {
+    stopTopicAudio();
     showTopicsMenu();
+}
+
+function stopTopicAudio() {
+    const audio = document.getElementById('topic-audio');
+    const playIcon = document.getElementById('play-icon');
+    const pauseIcon = document.getElementById('pause-icon');
+    
+    if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+        if (playIcon) playIcon.style.display = 'block';
+        if (pauseIcon) pauseIcon.style.display = 'none';
+    }
 }
 
 function showStats() {
