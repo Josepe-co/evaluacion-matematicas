@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pensamiento Matemático I - Evaluación Interactiva</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- PANTALLA 1: Menú Principal -->
+    <div id="menu-screen" class="screen active">
+        <div class="container">
+            <h1 class="game-title">Pensamiento Matemático I</h1>
+            <p class="subtitle">Evaluación Interactiva</p>
+            <button class="btn-primary" onclick="showRegistration()">Comenzar</button>
+            <small style="display: block; text-align: center; color: #666; margin-top: 2rem; font-size: 0.75rem;">
+                💡 Tip: Presiona Ctrl+Alt+P para modo prueba
+            </small>
+        </div>
+    </div>
+
+    <!-- PANTALLA 2: Registro de Alumno -->
+    <div id="registration-screen" class="screen">
+        <div class="container">
+            <h2>Datos del Alumno</h2>
+            <form id="student-form" onsubmit="startGame(event)">
+                <div class="form-group">
+                    <label for="student-name">Nombre completo:</label>
+                    <input type="text" id="student-name" required placeholder="Escribe tu nombre">
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-group">Grupo:</label>
+                    <select id="student-group" required>
+                        <option value="">Selecciona tu grupo</option>
+                        <option value="programacion">Programación</option>
+                        <option value="contabilidad">Contabilidad</option>
+                        <option value="diseño-grafico">Diseño Gráfico</option>
+                        <option value="laboratorista-quimico-a">Laboratorista Químico A</option>
+                        <option value="laboratorista-quimico-b">Laboratorista Químico B</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="student-semester">Semestre:</label>
+                    <select id="student-semester" required>
+                        <option value="">Selecciona tu semestre</option>
+                        <option value="1">1er Semestre</option>
+                        <option value="2">2do Semestre</option>
+                        <option value="3">3er Semestre</option>
+                        <option value="4">4to Semestre</option>
+                        <option value="5">5to Semestre</option>
+                        <option value="6">6to Semestre</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary">Iniciar Evaluación</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PANTALLA 3: Menú de Temas -->
+    <div id="topics-menu-screen" class="screen">
+        <div class="game-container-wide">
+            <div class="topics-header-modern">
+                <div class="welcome-section">
+                    <h2 class="animated-title">¡Elige tu Desafío!</h2>
+                    <p class="student-info"></p>
+                </div>
+                <div class="header-actions-modern">
+                    <button class="btn-modern btn-stats" onclick="showStats()">📊 Estadísticas</button>
+                    <button class="btn-modern btn-finish" onclick="finishEvaluation()">✓ Finalizar</button>
+                </div>
+            </div>
+            
+            <div class="overall-progress-modern">
+                <div class="progress-cards">
+                    <div class="progress-card">
+                        <div class="progress-icon">🎯</div>
+                        <div class="progress-value" id="completed-count">0/6</div>
+                        <div class="progress-text">Completados</div>
+                    </div>
+                    <div class="progress-card highlight">
+                        <div class="progress-icon">⭐</div>
+                        <div class="progress-value" id="total-score-display">0/100</div>
+                        <div class="progress-text">Puntuación</div>
+                    </div>
+                </div>
+                <div class="progress-bar-modern">
+                    <div class="progress-bar-fill" id="overall-progress-bar" style="width: 0%">
+                        <span class="progress-percentage"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topics-grid" id="topics-grid">
+                <!-- Los temas se generarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA 4: Estadísticas -->
+    <div id="stats-screen" class="screen">
+        <div class="game-container">
+            <h2>📊 Tus Estadísticas</h2>
+            <button class="btn-secondary" onclick="backToTopicsMenu()" style="margin-bottom: 2rem;">← Volver</button>
+            
+            <div class="stats-grid">
+                <div class="stat-card-big">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value" id="stats-total-score">0</div>
+                    <div class="stat-label">Puntuación Total</div>
+                </div>
+                
+                <div class="stat-card-big">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="stats-completed">0/6</div>
+                    <div class="stat-label">Temas Completados</div>
+                </div>
+                
+                <div class="stat-card-big">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" id="stats-average">0</div>
+                    <div class="stat-label">Promedio</div>
+                </div>
+            </div>
+
+            <div class="topics-breakdown-stats" id="topics-breakdown-stats">
+                <!-- Desglose detallado de cada tema -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA 5: Juego/Ejercicios -->
+    <div id="game-screen" class="screen">
+        <div class="game-container">
+            <!-- Header con información -->
+            <div class="game-header">
+                <button class="btn-back" onclick="backToTopicsMenu()">← Menú</button>
+                <div class="student-info">
+                    <span id="display-name"></span>
+                </div>
+                <div class="progress-info">
+                    <span id="current-topic"></span>
+                    <span id="attempt-counter"></span>
+                </div>
+                <div class="score-info">
+                    <span id="current-score">Puntuación: 0/100</span>
+                </div>
+            </div>
+
+            <!-- Barra de progreso de preguntas -->
+            <div class="question-progress">
+                <div class="question-dots" id="question-dots"></div>
+            </div>
+
+            <!-- Área de preguntas -->
+            <div class="question-area">
+                <div class="question-number">Pregunta <span id="question-number">1</span> de <span id="total-questions">5</span></div>
+                <h3 id="question-text" class="question-text-animated"></h3>
+                <div id="question-options" class="options-grid"></div>
+                <button id="submit-answer" class="btn-primary" onclick="checkAnswer()" disabled>Responder</button>
+            </div>
+
+            <!-- Pantalla de resultados del tema -->
+            <div id="topic-result" class="result-screen" style="display: none;">
+                <h2 id="result-title"></h2>
+                <p id="result-score"></p>
+                <p id="result-message"></p>
+                <div class="result-actions">
+                    <button id="retry-btn" class="btn-secondary" onclick="retryTopic()">🔄 Reintentar</button>
+                    <button class="btn-primary" onclick="backToTopicsMenu()">← Volver al Menú</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA 6: Resultados Finales -->
+    <div id="final-screen" class="screen">
+        <div class="container">
+            <h2>¡Evaluación Completada!</h2>
+            <div class="final-results">
+                <h3 id="final-name"></h3>
+                <div class="final-score">
+                    <span class="score-label">Calificación Final:</span>
+                    <span id="final-score-value" class="score-value">0</span>
+                    <span class="score-max">/100</span>
+                </div>
+                <div id="topics-breakdown" class="topics-breakdown"></div>
+                <p class="final-message" id="final-message"></p>
+            </div>
+            <button class="btn-primary" onclick="location.reload()">Finalizar</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

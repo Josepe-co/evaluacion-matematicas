@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Evaluaciones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --beige: #d4c5b3;
+            --terracota: #c19876;
+            --soft-orange: #d4a584;
+            --pastel-lavender: #b5a8d9;
+            --pastel-mint: #a8d4bd;
+            --bg-dark: #d8cdc0;
+            --bg-light: #cbbfb0;
+            --bg-card: #c8bdb0;
+            --text-primary: #2d1f14;
+            --text-secondary: #4a3a2f;
+            --border-color: #b5a89b;
+            --success-color: #a8d4bd;
+            --danger-color: #c19876;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #d8cdc0 0%, #cbbfb0 50%, #bfb3a4 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--soft-orange), var(--terracota));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .filters {
+            background: rgba(224, 213, 200, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            border: 2px solid var(--beige);
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(216, 205, 192, 0.7);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--soft-orange);
+            box-shadow: 0 0 0 3px rgba(212, 165, 132, 0.3);
+        }
+
+        .btn-filter {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, var(--soft-orange), var(--terracota));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(224, 213, 200, 0.6);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid var(--beige);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--soft-orange);
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .table-container {
+            background: rgba(224, 213, 200, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            overflow-x: auto;
+            border: 2px solid var(--beige);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: rgba(200, 189, 176, 0.5);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background: rgba(212, 197, 179, 0.4);
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .score-excellent {
+            background: rgba(168, 212, 189, 0.4);
+            color: #6a9d7f;
+        }
+
+        .score-good {
+            background: rgba(212, 165, 132, 0.4);
+            color: #a67c52;
+        }
+
+        .score-regular {
+            background: rgba(193, 152, 118, 0.4);
+            color: #8c6d4f;
+        }
+
+        .score-poor {
+            background: rgba(230, 168, 155, 0.4);
+            color: #a6675b;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .topic-scores {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .table-container {
+                padding: 1rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>📊 Panel Administrativo</h1>
+
+        <!-- Filtros -->
+        <div class="filters">
+            <div class="filter-group">
+                <label for="filter-group">Grupo:</label>
+                <select id="filter-group">
+                    <option value="">Todos los grupos</option>
+                    <option value="programacion">Programación</option>
+                    <option value="contabilidad">Contabilidad</option>
+                    <option value="diseño-grafico">Diseño Gráfico</option>
+                    <option value="laboratorista-quimico-a">Laboratorista Químico A</option>
+                    <option value="laboratorista-quimico-b">Laboratorista Químico B</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filter-semester">Semestre:</label>
+                <select id="filter-semester">
+                    <option value="">Todos los semestres</option>
+                    <option value="1">1er Semestre</option>
+                    <option value="2">2do Semestre</option>
+                    <option value="3">3er Semestre</option>
+                    <option value="4">4to Semestre</option>
+                    <option value="5">5to Semestre</option>
+                    <option value="6">6to Semestre</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filter-name">Buscar por nombre:</label>
+                <input type="text" id="filter-name" placeholder="Escribe un nombre...">
+            </div>
+
+            <button class="btn-filter" onclick="applyFilters()">Aplicar Filtros</button>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats" id="stats-container">
+            <div class="stat-card">
+                <div class="stat-label">Total de Evaluaciones</div>
+                <div class="stat-value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Promedio General</div>
+                <div class="stat-value" id="stat-average">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Aprobados (≥60)</div>
+                <div class="stat-value" id="stat-passed">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Reprobados (<60)</div>
+                <div class="stat-value" id="stat-failed">0</div>
+            </div>
+        </div>
+
+        <!-- Tabla de resultados -->
+        <div class="table-container">
+            <div id="loading" class="loading">Cargando datos...</div>
+            <div id="no-data" class="no-data" style="display: none;">
+                No hay datos disponibles con los filtros seleccionados.
+            </div>
+            <table id="results-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Grupo</th>
+                        <th>Semestre</th>
+                        <th>Calificación</th>
+                        <th>Fecha</th>
+                        <th>Detalles por Tema</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Configuración de Firebase (usa la misma que en app.js)
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_AUTH_DOMAIN",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_STORAGE_BUCKET",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
+
+        // Inicializar Firebase
+        let db = null;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            loadData();
+        } catch (error) {
+            console.error("Error inicializando Firebase:", error);
+            document.getElementById('loading').textContent = 'Error al conectar con la base de datos. Verifica la configuración de Firebase.';
+        }
+
+        let allData = [];
+
+        // Cargar todos los datos
+        async function loadData() {
+            if (!db) return;
+
+            try {
+                const snapshot = await db.collection('evaluations').orderBy('completedAt', 'desc').get();
+                allData = [];
+                
+                snapshot.forEach(doc => {
+                    allData.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                displayData(allData);
+            } catch (error) {
+                console.error("Error cargando datos:", error);
+                document.getElementById('loading').textContent = 'Error al cargar los datos.';
+            }
+        }
+
+        // Mostrar datos en la tabla
+        function displayData(data) {
+            document.getElementById('loading').style.display = 'none';
+            
+            if (data.length === 0) {
+                document.getElementById('no-data').style.display = 'block';
+                document.getElementById('results-table').style.display = 'none';
+                updateStats([]);
+                return;
+            }
+
+            document.getElementById('no-data').style.display = 'none';
+            document.getElementById('results-table').style.display = 'table';
+
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+
+            data.forEach(record => {
+                const row = document.createElement('tr');
+                
+                const scoreClass = getScoreClass(record.finalScore);
+                const date = new Date(record.completedAt).toLocaleDateString('es-MX', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const topicDetails = formatTopicScores(record.topicScores);
+
+                row.innerHTML = `
+                    <td>${record.name}</td>
+                    <td>${formatGroup(record.group)}</td>
+                    <td>${record.semester}°</td>
+                    <td><span class="score-badge ${scoreClass}">${record.finalScore.toFixed(2)}</span></td>
+                    <td>${date}</td>
+                    <td class="topic-scores">${topicDetails}</td>
+                `;
+
+                tbody.appendChild(row);
+            });
+
+            updateStats(data);
+        }
+
+        // Formatear nombre del grupo
+        function formatGroup(group) {
+            const groups = {
+                'programacion': 'Programación',
+                'contabilidad': 'Contabilidad',
+                'diseño-grafico': 'Diseño Gráfico',
+                'laboratorista-quimico-a': 'Lab. Químico A',
+                'laboratorista-quimico-b': 'Lab. Químico B'
+            };
+            return groups[group] || group;
+        }
+
+        // Obtener clase CSS según calificación
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-excellent';
+            if (score >= 70) return 'score-good';
+            if (score >= 60) return 'score-regular';
+            return 'score-poor';
+        }
+
+        // Formatear puntuaciones por tema
+        function formatTopicScores(scores) {
+            if (!scores) return 'N/A';
+            
+            const topics = {
+                'logica': 'Lógica',
+                'operaciones': 'Operaciones',
+                'porcentaje': 'Porcentajes',
+                'proporcion': 'Proporciones',
+                'jerarquia': 'Jerarquía',
+                'aplicacion': 'Aplicación'
+            };
+
+            let html = '';
+            for (let [key, value] of Object.entries(scores)) {
+                html += `${topics[key]}: ${value.toFixed(2)}<br>`;
+            }
+            return html;
+        }
+
+        // Actualizar estadísticas
+        function updateStats(data) {
+            const total = data.length;
+            const average = total > 0 ? (data.reduce((sum, r) => sum + r.finalScore, 0) / total).toFixed(2) : 0;
+            const passed = data.filter(r => r.finalScore >= 60).length;
+            const failed = data.filter(r => r.finalScore < 60).length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-average').textContent = average;
+            document.getElementById('stat-passed').textContent = passed;
+            document.getElementById('stat-failed').textContent = failed;
+        }
+
+        // Aplicar filtros
+        function applyFilters() {
+            const groupFilter = document.getElementById('filter-group').value;
+            const semesterFilter = document.getElementById('filter-semester').value;
+            const nameFilter = document.getElementById('filter-name').value.toLowerCase();
+
+            let filtered = allData;
+
+            if (groupFilter) {
+                filtered = filtered.filter(r => r.group === groupFilter);
+            }
+
+            if (semesterFilter) {
+                filtered = filtered.filter(r => r.semester === semesterFilter);
+            }
+
+            if (nameFilter) {
+                filtered = filtered.filter(r => r.name.toLowerCase().includes(nameFilter));
+            }
+
+            displayData(filtered);
+        }
+
+        // Aplicar filtros al escribir en el buscador
+        document.getElementById('filter-name').addEventListener('input', applyFilters);
+    </script>
+</body>
+</html>
