@@ -714,7 +714,13 @@ function loadTopicAudio(topicKey) {
     const durationDisplay = document.getElementById('duration-time');
     
     // Cargar el archivo de audio
-    audio.src = audioFiles[topicKey] || '';
+    const audioFile = audioFiles[topicKey];
+    if (!audioFile) {
+        console.warn('No hay archivo de audio para este tema:', topicKey);
+        return;
+    }
+    
+    audio.src = audioFile;
     
     // Resetear el reproductor
     audio.pause();
@@ -723,6 +729,12 @@ function loadTopicAudio(topicKey) {
     pauseIcon.style.display = 'none';
     progressBar.value = 0;
     currentTimeDisplay.textContent = '0:00';
+    
+    // Manejo de errores al cargar el audio
+    audio.onerror = function() {
+        console.error('Error al cargar el audio:', audioFile);
+        alert('⚠️ No se pudo cargar el audio para este tema. Verifica que el archivo existe.');
+    };
     
     // Evento cuando el audio está listo
     audio.addEventListener('loadedmetadata', function() {
