@@ -1,0 +1,74 @@
+═══════════════════════════════════════════════════════════════════════════════
+    SCRIPTS PARA AUDIOS EXPLICATIVOS - EVALUACIÓN MATEMÁTICAS
+═══════════════════════════════════════════════════════════════════════════════
+
+INSTRUCCIONES:
+- Graba cada audio con voz clara y pausada
+- Duración recomendada: 30-45 segundos por audio
+- Formato sugerido: MP3 o WAV
+- Guarda los archivos con los nombres indicados abajo
+- Los audios se reproducirán automáticamente al entrar a cada tema
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🧠 TEMA 1: LÓGICA
+Nombre del archivo: audio_logica.mp3
+───────────────────────────────────────────────────────────────────────────────
+
+"Bienvenido al tema de Lógica, en esta sección evaluaremos tu capacidad de razonamiento lógico, trabajarás con proposiciones, implicaciones y negaciones, recuerda que en lógica matemática las proposiciones solo pueden ser verdaderas o falsas, lee cada pregunta con atención y analiza las relaciones entre las diferentes afirmaciones antes de responder"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔢 TEMA 2: OPERACIONES CON NÚMEROS ENTEROS Y FRACCIONARIOS
+Nombre del archivo: audio_operaciones.mp3
+───────────────────────────────────────────────────────────────────────────────
+
+"Bienvenido al tema de Operaciones, aquí pondrás a prueba tu habilidad con números enteros y fraccionarios, recuerda las reglas: al multiplicar números negativos el resultado es positivo, al sumar o restar presta atención a los signos, para fracciones busca denominadores comunes cuando sea necesario, tómate tu tiempo para realizar cada operación correctamente"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 TEMA 3: PORCENTAJE
+Nombre del archivo: audio_porcentaje.mp3
+───────────────────────────────────────────────────────────────────────────────
+
+"Bienvenido al tema de Porcentaje, los porcentajes nos ayudan a expresar partes de un total, recuerda que para calcular un porcentaje multiplicas el número por el porcentaje y divides entre cien, por ejemplo el veinte por ciento de doscientos es: doscientos por veinte entre cien igual a cuarenta, visualiza siempre qué parte del total estás calculando"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚖️ TEMA 4: PROPORCIÓN Y PROPORCIONALIDAD
+Nombre del archivo: audio_proporcion.mp3
+───────────────────────────────────────────────────────────────────────────────
+
+"Bienvenido al tema de Proporcionalidad, trabajaremos con relaciones entre cantidades, en proporcionalidad directa cuando una cantidad aumenta la otra también aumenta en la misma proporción, en proporcionalidad inversa cuando una aumenta la otra disminuye, usa el método de regla de tres para resolver los problemas: identifica qué cantidades se relacionan y establece la proporción"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 TEMA 5: JERARQUÍA DE OPERACIONES
+Nombre del archivo: audio_jerarquia.mp3
+───────────────────────────────────────────────────────────────────────────────
+
+"Bienvenido al tema de Jerarquía de Operaciones, la jerarquía nos dice en qué orden resolver las operaciones, recuerda: primero los paréntesis, luego potencias y raíces, después multiplicaciones y divisiones de izquierda a derecha, y finalmente sumas y restas, si no sigues este orden obtendrás resultados incorrectos, identifica siempre qué operación debes hacer primero"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 TEMA 6: APLICACIÓN DE CONOCIMIENTOS MATEMÁTICOS
+Nombre del archivo: audio_aplicacion.mp3
+───────────────────────────────────────────────────────────────────────────────
+
+"Bienvenido al tema de Aplicación, aquí resolverás problemas de la vida real usando todo lo que has aprendido: operaciones, porcentajes, proporciones y lógica, lee cada problema con cuidado, identifica qué te están preguntando y qué datos tienes, plantea la operación o el razonamiento necesario antes de calcular, estos problemas demuestran cómo las matemáticas nos ayudan en situaciones cotidianas"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+RESUMEN DE ARCHIVOS NECESARIOS:
+1. audio_logica.mp3
+2. audio_operaciones.mp3
+3. audio_porcentaje.mp3
+4. audio_proporcion.mp3
+5. audio_jerarquia.mp3
+6. audio_aplicacion.mp3
+
+NOTA: Una vez que hayas grabado los audios, guárdalos en la carpeta del proyecto
+y avísame para integrarlos en la aplicación. Los audios se reproducirán 
+automáticamente cuando el estudiante entre a cada tema.
+
+═══════════════════════════════════════════════════════════════════════════════

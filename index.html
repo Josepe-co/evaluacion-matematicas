@@ -146,6 +146,30 @@
                 </div>
             </div>
 
+            <!-- Reproductor de Audio -->
+            <div class="audio-player" id="audio-player">
+                <div class="audio-controls">
+                    <button class="audio-btn" id="play-pause-btn">
+                        <svg id="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <svg id="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                        </svg>
+                    </button>
+                    <div class="audio-time">
+                        <span id="current-time">0:00</span>
+                    </div>
+                    <div class="audio-progress-container">
+                        <input type="range" class="audio-progress" id="audio-progress" min="0" max="100" value="0">
+                    </div>
+                    <div class="audio-time">
+                        <span id="duration-time">0:00</span>
+                    </div>
+                </div>
+                <audio id="topic-audio"></audio>
+            </div>
+
             <!-- Barra de progreso de preguntas -->
             <div class="question-progress">
                 <div class="question-dots" id="question-dots"></div>

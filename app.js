@@ -280,6 +280,9 @@ function loadTopic() {
     document.getElementById('attempt-counter').textContent = `Intento ${attempt}/3`;
     updateScoreDisplay();
     
+    // Cargar audio del tema
+    loadTopicAudio(topicKey);
+    
     // Seleccionar preguntas aleatorias
     gameState.currentTopicQuestions = selectRandomQuestions(topicKey, 5);
     gameState.currentQuestionIndex = 0;
@@ -675,4 +678,84 @@ async function saveToFirebase(finalScore) {
     } catch (error) {
         console.error("Error guardando datos:", error);
     }
+}
+
+// REPRODUCTOR DE AUDIO
+const audioFiles = {
+    'logica': 'audio_logica.mp3',
+    'operaciones': 'audio_operaciones.mp3',
+    'porcentaje': 'audio_porcentaje.mp3',
+    'proporcion': 'audio_proporcion.mp3',
+    'jerarquia': 'audio_jerarquia.mp3',
+    'aplicacion': 'audio_aplicacion.mp3'
+};
+
+function loadTopicAudio(topicKey) {
+    const audio = document.getElementById('topic-audio');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const playIcon = document.getElementById('play-icon');
+    const pauseIcon = document.getElementById('pause-icon');
+    const progressBar = document.getElementById('audio-progress');
+    const currentTimeDisplay = document.getElementById('current-time');
+    const durationDisplay = document.getElementById('duration-time');
+    
+    // Cargar el archivo de audio
+    audio.src = audioFiles[topicKey] || '';
+    
+    // Resetear el reproductor
+    audio.pause();
+    audio.currentTime = 0;
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
+    progressBar.value = 0;
+    currentTimeDisplay.textContent = '0:00';
+    
+    // Evento cuando el audio está listo
+    audio.addEventListener('loadedmetadata', function() {
+        durationDisplay.textContent = formatTime(audio.duration);
+    });
+    
+    // Evento para actualizar la barra de progreso
+    audio.addEventListener('timeupdate', function() {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressBar.value = progress;
+        currentTimeDisplay.textContent = formatTime(audio.currentTime);
+        
+        // Actualizar el color de la barra de progreso
+        progressBar.style.setProperty('--progress', progress + '%');
+    });
+    
+    // Botón play/pause
+    playPauseBtn.onclick = function() {
+        if (audio.paused) {
+            audio.play();
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+        } else {
+            audio.pause();
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+        }
+    };
+    
+    // Barra de progreso para adelantar/retroceder
+    progressBar.addEventListener('input', function() {
+        const time = (progressBar.value / 100) * audio.duration;
+        audio.currentTime = time;
+    });
+    
+    // Cuando el audio termina
+    audio.addEventListener('ended', function() {
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+        progressBar.value = 0;
+        audio.currentTime = 0;
+    });
+}
+
+function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
