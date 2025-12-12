@@ -696,12 +696,12 @@ async function saveToFirebase(finalScore) {
 
 // REPRODUCTOR DE AUDIO
 const audioFiles = {
-    'logica': 'audio_logica.mp3',
-    'operaciones': 'audio_operaciones.mp3',
-    'porcentaje': 'audio_porcentaje.mp3',
-    'proporcion': 'audio_proporcion.mp3',
-    'jerarquia': 'audio_jerarquia.mp3',
-    'aplicacion': 'audio_aplicacion.mp3'
+    'logica': 'audio_logica.MP3',
+    'operaciones': 'audio_operaciones.MP3',
+    'porcentaje': 'audio_porcentaje.MP3',
+    'proporcion': 'audio_proporcion.MP3',
+    'jerarquia': 'audio_jerarquia.MP3',
+    'aplicacion': 'audio_aplicacion.MP3'
 };
 
 function loadTopicAudio(topicKey) {
