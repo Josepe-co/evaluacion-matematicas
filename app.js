@@ -266,6 +266,7 @@ function startGame(event) {
     
     gameState.studentData = {
         name: document.getElementById('student-name').value,
+        specialty: document.getElementById('student-specialty').value,
         group: document.getElementById('student-group').value,
         semester: document.getElementById('student-semester').value,
         timestamp: new Date().toISOString()

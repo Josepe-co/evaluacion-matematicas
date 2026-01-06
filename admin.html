@@ -241,14 +241,26 @@
         <!-- Filtros -->
         <div class="filters">
             <div class="filter-group">
-                <label for="filter-group">Grupo:</label>
-                <select id="filter-group">
-                    <option value="">Todos los grupos</option>
+                <label for="filter-specialty">Especialidad:</label>
+                <select id="filter-specialty">
+                    <option value="">Todas las especialidades</option>
                     <option value="programacion">Programación</option>
                     <option value="contabilidad">Contabilidad</option>
                     <option value="diseño-grafico">Diseño Gráfico</option>
                     <option value="laboratorista-quimico-a">Laboratorista Químico A</option>
                     <option value="laboratorista-quimico-b">Laboratorista Químico B</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filter-group">Grupo (A-E):</label>
+                <select id="filter-group">
+                    <option value="">Todos los grupos</option>
+                    <option value="A">Grupo A</option>
+                    <option value="B">Grupo B</option>
+                    <option value="C">Grupo C</option>
+                    <option value="D">Grupo D</option>
+                    <option value="E">Grupo E</option>
                 </select>
             </div>
 
@@ -303,6 +315,7 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
+                        <th>Especialidad</th>
                         <th>Grupo</th>
                         <th>Semestre</th>
                         <th>Calificación</th>
@@ -399,7 +412,8 @@
 
                 row.innerHTML = `
                     <td>${record.name}</td>
-                    <td>${formatGroup(record.group)}</td>
+                    <td>${formatSpecialty(record.specialty)}</td>
+                    <td>${record.group || 'N/A'}</td>
                     <td>${record.semester}°</td>
                     <td><span class="score-badge ${scoreClass}">${record.finalScore.toFixed(2)}</span></td>
                     <td>${date}</td>
@@ -412,16 +426,16 @@
             updateStats(data);
         }
 
-        // Formatear nombre del grupo
-        function formatGroup(group) {
-            const groups = {
+        // Formatear nombre de la especialidad
+        function formatSpecialty(specialty) {
+            const specialties = {
                 'programacion': 'Programación',
                 'contabilidad': 'Contabilidad',
                 'diseño-grafico': 'Diseño Gráfico',
                 'laboratorista-quimico-a': 'Lab. Químico A',
                 'laboratorista-quimico-b': 'Lab. Químico B'
             };
-            return groups[group] || group;
+            return specialties[specialty] || specialty || 'N/A';
         }
 
         // Obtener clase CSS según calificación
@@ -467,11 +481,16 @@
 
         // Aplicar filtros
         function applyFilters() {
+            const specialtyFilter = document.getElementById('filter-specialty').value;
             const groupFilter = document.getElementById('filter-group').value;
             const semesterFilter = document.getElementById('filter-semester').value;
             const nameFilter = document.getElementById('filter-name').value.toLowerCase();
 
             let filtered = allData;
+
+            if (specialtyFilter) {
+                filtered = filtered.filter(r => r.specialty === specialtyFilter);
+            }
 
             if (groupFilter) {
                 filtered = filtered.filter(r => r.group === groupFilter);
