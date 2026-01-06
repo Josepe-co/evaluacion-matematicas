@@ -264,10 +264,32 @@ function showRegistration() {
 function startGame(event) {
     event.preventDefault();
     
+    const registrationType = document.getElementById('registration-type').value;
+    
+    // Validar que se seleccionó un tipo de registro
+    if (!registrationType) {
+        alert('Por favor selecciona una opción de registro');
+        return;
+    }
+    
+    // Validar que el campo seleccionado está lleno
+    if (registrationType === 'specialty') {
+        if (!document.getElementById('student-specialty').value) {
+            alert('Por favor selecciona una especialidad');
+            return;
+        }
+    } else if (registrationType === 'group') {
+        if (!document.getElementById('student-group').value) {
+            alert('Por favor selecciona un grupo');
+            return;
+        }
+    }
+    
     gameState.studentData = {
         name: document.getElementById('student-name').value,
-        specialty: document.getElementById('student-specialty').value,
-        group: document.getElementById('student-group').value,
+        registrationType: registrationType,
+        specialty: registrationType === 'specialty' ? document.getElementById('student-specialty').value : null,
+        group: registrationType === 'group' ? document.getElementById('student-group').value : null,
         semester: document.getElementById('student-semester').value,
         timestamp: new Date().toISOString()
     };
@@ -785,4 +807,33 @@ function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Función para mostrar/ocultar campos según el tipo de registro
+function toggleRegistrationType() {
+    const registrationType = document.getElementById('registration-type').value;
+    const specialtyGroup = document.getElementById('specialty-group');
+    const groupSelect = document.getElementById('group-select');
+    
+    // Resetear los campos
+    document.getElementById('student-specialty').value = '';
+    document.getElementById('student-group').value = '';
+    
+    // Mostrar/ocultar según la selección
+    if (registrationType === 'specialty') {
+        specialtyGroup.style.display = 'block';
+        groupSelect.style.display = 'none';
+        document.getElementById('student-specialty').required = true;
+        document.getElementById('student-group').required = false;
+    } else if (registrationType === 'group') {
+        specialtyGroup.style.display = 'none';
+        groupSelect.style.display = 'block';
+        document.getElementById('student-specialty').required = false;
+        document.getElementById('student-group').required = true;
+    } else {
+        specialtyGroup.style.display = 'none';
+        groupSelect.style.display = 'none';
+        document.getElementById('student-specialty').required = false;
+        document.getElementById('student-group').required = false;
+    }
 }
