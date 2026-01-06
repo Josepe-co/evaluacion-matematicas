@@ -817,20 +817,29 @@ function toggleRegistrationType() {
     const studentSpecialty = document.getElementById('student-specialty');
     const studentGroup = document.getElementById('student-group');
     
-    // Resetear y ocultar todo
-    specialtyGroup.style.display = 'none';
-    groupSelect.style.display = 'none';
-    studentSpecialty.required = false;
-    studentGroup.required = false;
-    studentSpecialty.value = '';
-    studentGroup.value = '';
-    
     // Mostrar solo el campo seleccionado
     if (registrationType === 'specialty') {
         specialtyGroup.style.display = 'block';
+        specialtyGroup.style.visibility = 'visible';
+        groupSelect.style.display = 'none';
+        groupSelect.style.visibility = 'hidden';
         studentSpecialty.required = true;
+        studentGroup.required = false;
+        studentGroup.value = '';
     } else if (registrationType === 'group') {
+        specialtyGroup.style.display = 'none';
+        specialtyGroup.style.visibility = 'hidden';
         groupSelect.style.display = 'block';
+        groupSelect.style.visibility = 'visible';
+        studentSpecialty.required = false;
         studentGroup.required = true;
+        studentSpecialty.value = '';
+    } else {
+        specialtyGroup.style.display = 'none';
+        groupSelect.style.display = 'none';
+        studentSpecialty.required = false;
+        studentGroup.required = false;
+        studentSpecialty.value = '';
+        studentGroup.value = '';
     }
 }
