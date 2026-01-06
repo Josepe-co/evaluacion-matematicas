@@ -814,32 +814,26 @@ function toggleRegistrationType() {
     const registrationType = document.getElementById('registration-type').value;
     const specialtyGroup = document.getElementById('specialty-group');
     const groupSelect = document.getElementById('group-select');
-    const studentSpecialty = document.getElementById('student-specialty');
-    const studentGroup = document.getElementById('student-group');
     
-    // Mostrar solo el campo seleccionado
     if (registrationType === 'specialty') {
+        // Mostrar especialidad, ocultar grupo
         specialtyGroup.style.display = 'block';
-        specialtyGroup.style.visibility = 'visible';
         groupSelect.style.display = 'none';
-        groupSelect.style.visibility = 'hidden';
-        studentSpecialty.required = true;
-        studentGroup.required = false;
-        studentGroup.value = '';
+        document.getElementById('student-specialty').required = true;
+        document.getElementById('student-group').required = false;
+        document.getElementById('student-group').value = '';
     } else if (registrationType === 'group') {
+        // Mostrar grupo, ocultar especialidad
         specialtyGroup.style.display = 'none';
-        specialtyGroup.style.visibility = 'hidden';
         groupSelect.style.display = 'block';
-        groupSelect.style.visibility = 'visible';
-        studentSpecialty.required = false;
-        studentGroup.required = true;
-        studentSpecialty.value = '';
+        document.getElementById('student-specialty').required = false;
+        document.getElementById('student-group').required = true;
+        document.getElementById('student-specialty').value = '';
     } else {
+        // No mostrar ninguno
         specialtyGroup.style.display = 'none';
         groupSelect.style.display = 'none';
-        studentSpecialty.required = false;
-        studentGroup.required = false;
-        studentSpecialty.value = '';
-        studentGroup.value = '';
+        document.getElementById('student-specialty').required = false;
+        document.getElementById('student-group').required = false;
     }
 }
