@@ -33,6 +33,37 @@ try {
 
 // MODO PRUEBA SECRETO
 // Usa ?test=true en la URL o presiona Ctrl+Shift+T para activarlo
+
+// Función para mostrar/ocultar campos según el tipo de registro
+function toggleRegistrationType() {
+    const registrationType = document.getElementById('registration-type').value;
+    const specialtyGroup = document.getElementById('specialty-group');
+    const groupSelect = document.getElementById('group-select');
+    
+    console.log('Toggle called, type:', registrationType);
+    
+    if (registrationType === 'specialty') {
+        // Mostrar especialidad, ocultar grupo
+        specialtyGroup.style.display = 'block';
+        groupSelect.style.display = 'none';
+        document.getElementById('student-specialty').required = true;
+        document.getElementById('student-group').required = false;
+        document.getElementById('student-group').value = '';
+    } else if (registrationType === 'group') {
+        // Mostrar grupo, ocultar especialidad
+        specialtyGroup.style.display = 'none';
+        groupSelect.style.display = 'block';
+        document.getElementById('student-specialty').required = false;
+        document.getElementById('student-group').required = true;
+        document.getElementById('student-specialty').value = '';
+    } else {
+        // No mostrar ninguno
+        specialtyGroup.style.display = 'none';
+        groupSelect.style.display = 'none';
+        document.getElementById('student-specialty').required = false;
+        document.getElementById('student-group').required = false;
+    }
+}
 let testMode = false;
 
 // Detectar parámetro en URL
@@ -807,33 +838,4 @@ function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, '0')}`;
-}
-
-// Función para mostrar/ocultar campos según el tipo de registro
-function toggleRegistrationType() {
-    const registrationType = document.getElementById('registration-type').value;
-    const specialtyGroup = document.getElementById('specialty-group');
-    const groupSelect = document.getElementById('group-select');
-    
-    if (registrationType === 'specialty') {
-        // Mostrar especialidad, ocultar grupo
-        specialtyGroup.style.display = 'block';
-        groupSelect.style.display = 'none';
-        document.getElementById('student-specialty').required = true;
-        document.getElementById('student-group').required = false;
-        document.getElementById('student-group').value = '';
-    } else if (registrationType === 'group') {
-        // Mostrar grupo, ocultar especialidad
-        specialtyGroup.style.display = 'none';
-        groupSelect.style.display = 'block';
-        document.getElementById('student-specialty').required = false;
-        document.getElementById('student-group').required = true;
-        document.getElementById('student-specialty').value = '';
-    } else {
-        // No mostrar ninguno
-        specialtyGroup.style.display = 'none';
-        groupSelect.style.display = 'none';
-        document.getElementById('student-specialty').required = false;
-        document.getElementById('student-group').required = false;
-    }
 }
